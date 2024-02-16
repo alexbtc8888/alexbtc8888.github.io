@@ -305,7 +305,13 @@
     <div id="menu-toggle">顯示選單</div>
 
     <script>
-        // ... 其他JavaScript代碼 ...
+        function checkIfMobile() {
+            const userAgent = navigator.userAgent;
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())) {
+                return true; // 是手機瀏覽器
+            }
+            return false; // 不是手機瀏覽器
+        }
 
         function createFloatingMenu() {
             const menu = document.getElementById('floating-menu');
@@ -336,18 +342,26 @@
                 createFloatingMenu();
 
             };
-        };
-        
-        // 監聽視窗寬度變化
-        window.addEventListener('resize', function() {
-            // 隱藏選單
-            const menu = document.getElementById('floating-menu');
-            menu.classList.add('hidden');
-            document.getElementById('menu-toggle').textContent = '顯示選單';
+            if (checkIfMobile()) {
+                // 如果是手機瀏覽器，放大文字
+                document.body.style.fontSize = "30em";
+                const menu = document.getElementById('floating-menu');
+                if (menu) {
+                    menu.style.top = '18%'; // 或任何您想要的值
+                }
+            } else {
+                // 監聽視窗寬度變化
+                window.addEventListener('resize', function() {
+                    // 隱藏選單
+                    const menu = document.getElementById('floating-menu');
+                    menu.classList.add('hidden');
+                    document.getElementById('menu-toggle').textContent = '顯示選單';
 
-            // 重新繪製圖表
-            drawCharts();
-        });
+                    // 重新繪製圖表
+                    drawCharts();
+                });
+            }
+        };
     </script>
 </body>
 </html>
