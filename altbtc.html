@@ -301,8 +301,8 @@
 </head>
 <body>
     <div id="charts-container"></div>
-    <div id="floating-menu"></div>
-    <div id="menu-toggle">隱藏選單</div>
+    <div id="floating-menu" class="hidden"></div>
+    <div id="menu-toggle">顯示選單</div>
 
     <script>
         // ... 其他JavaScript代碼 ...
@@ -337,6 +337,17 @@
 
             };
         };
+        
+        // 監聽視窗寬度變化
+        window.addEventListener('resize', function() {
+            // 隱藏選單
+            const menu = document.getElementById('floating-menu');
+            menu.classList.add('hidden');
+            document.getElementById('menu-toggle').textContent = '顯示選單';
+
+            // 重新繪製圖表
+            drawCharts();
+        });
     </script>
 </body>
 </html>
