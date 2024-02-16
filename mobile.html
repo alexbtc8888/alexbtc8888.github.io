@@ -349,19 +349,19 @@
                 if (menu) {
                     menu.style.top = '18%'; // 或任何您想要的值
                 }
+            } else {
+                // 監聽視窗寬度變化
+                window.addEventListener('resize', function() {
+                    // 隱藏選單
+                    const menu = document.getElementById('floating-menu');
+                    menu.classList.add('hidden');
+                    document.getElementById('menu-toggle').textContent = '顯示選單';
+
+                    // 重新繪製圖表
+                    drawCharts();
+                });
             }
         };
-        
-        // 監聽視窗寬度變化
-        window.addEventListener('resize', function() {
-            // 隱藏選單
-            const menu = document.getElementById('floating-menu');
-            menu.classList.add('hidden');
-            document.getElementById('menu-toggle').textContent = '顯示選單';
-
-            // 重新繪製圖表
-            drawCharts();
-        });
     </script>
 </body>
 </html>
