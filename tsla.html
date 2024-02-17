@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TSLA Daily Chart</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    // 使用Yahoo Finance API獲取TSLA日線圖資料
+    const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/TSLA?range=1y&interval=1d';
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const candlestickData = data.chart.result[0].indicators.quote[0].close;
+        const dates = data.chart.result[0].timestamp.map(timestamp => new Date(timestamp * 1000));
+
+        // 建立Plotly日線圖
+        const trace = {
+          x: dates,
+          y: candlestickData,
+          type: 'scatter',
+          mode: 'lines',
+          line: {
+            color: 'rgb(0, 0, 0)',
+          },
+        };
+
+        const layout = {
+          title: 'TSLA Daily Chart',
+          xaxis: {
+            title: 'Date',
+            type: 'date',
+          },
+          yaxis: {
+            title: 'Price (USD)',
+          },
+        };
+
+        Plotly.newPlot('chart', [trace], layout);
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
