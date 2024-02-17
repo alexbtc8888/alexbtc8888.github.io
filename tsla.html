@@ -6,14 +6,29 @@
 </head>
 <body>
   <div id="chart"></div>
+  <div id="debug"></div>
 
   <script>
+    function log(message) {
+      const debugDiv = document.getElementById('debug');
+      const p = document.createElement('p');
+      p.textContent = message;
+      debugDiv.appendChild(p);
+    }
+
+    log('Fetching TSLA data...');
+
     // 使用Yahoo Finance API獲取TSLA日線圖資料
     const apiUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/TSLA?range=1y&interval=1d';
 
     fetch(apiUrl)
-      .then(response => response.json())
+      .then(response => {
+        log('Response received: ' + response.status);
+        return response.json();
+      })
       .then(data => {
+        log('Data fetched: ' + JSON.stringify(data));
+
         const candlestickData = data.chart.result[0].indicators.quote[0].close;
         const dates = data.chart.result[0].timestamp.map(timestamp => new Date(timestamp * 1000));
 
@@ -39,9 +54,13 @@
           },
         };
 
+        log('Creating chart...');
         Plotly.newPlot('chart', [trace], layout);
+        log('Chart created.');
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        log('Error: ' + error);
+      });
   </script>
 </body>
 </html>
