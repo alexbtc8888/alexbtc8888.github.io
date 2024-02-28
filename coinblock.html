@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加密貨幣報價</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 96%; /* 調整高度，留下4%的空白 */
+            width: 100%;
+            background-color: black; /* 設定背景色為黑色 */
+            color: #fff; /* 設定文字顏色為白色 */
+            font-weight: bold; /* 使用粗體字 */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 將畫面分成4列 */
+            height: 100%; /* 使用全部可視區域高度 */
+            grid-gap: 0; /* 取消格線 */
+        }
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .green-bg {
+            background-color: green; /* 設定背景色為綠色 */
+        }
+
+        .red-bg {
+            background-color: red; /* 設定背景色為紅色 */
+            color: #fff;
+        }
+
+        .green-bg2 {
+            background-color: #99FF33; /* 設定背景色為綠色 */
+            color: #000;
+        }
+
+        .red-bg2 {
+            background-color: #FF7575; /* 設定背景色為紅色 */
+            color: #000;
+        }
+
+        .black-bg {
+            background-color: black; /* 設定背景色為黑色 */
+        }
+
+        .green-text {
+            color: #80FF00; /* 設定文字顏色為綠色 */
+        }
+
+        .red-text {
+            color: red; /* 設定文字顏色為紅色 */
+        }
+
+        .price {
+            font-size: 35px;
+        }
+        .top-space {
+            height: 2%;
+        }
+        /* 調整底部空白 */
+        .bottom-space {
+            height: 2%;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-space"></div>
+    <div class="container">
+        <!-- 生成4*8的區塊 -->
+    </div>
+    <div class="bottom-space"></div> <!-- 底部空白 -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function fetchAndUpdate() {
+                var container = document.querySelector('.container');
+                var coins = ['BTC', 'ETH', 'STX', 'RIF', 'SOL', 'BNB', 'STRK', 'SUI',
+                            'APT', 'ORDI', 'ARB', 'MATIC', 'MANTA', 'XAI', 'DOT', 'ATOM',
+                            'STG', 'LINK', 'PYTH', 'ALT', 'SSV', 'PENDLE', 'MAGIC', 'BLUR',
+                            'WLD', 'UNI', 'DYDX', 'JUP', 'FIL', 'AR', 'STORJ', 'ICP'];
+
+                container.innerHTML = ''; // 清空容器內的內容
+
+                coins.forEach(function(coin) {
+                    fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=' + coin + 'USDT')
+                        .then(response => response.json())
+                        .then(data => {
+                            var block = document.createElement('div');
+                            block.className = 'block';
+                            var priceChangePercent = parseFloat(data.priceChangePercent);
+                            if (priceChangePercent > 10) {
+                                block.classList.add('red-bg', 'black-text');
+                            } else if (priceChangePercent > 5) {
+                                block.classList.add('red-bg2', 'black-text');
+                            } else if (priceChangePercent < -10) {
+                                block.classList.add('green-bg', 'black-text');
+                            } else if (priceChangePercent < -5) {
+                                block.classList.add('green-bg2', 'black-text');
+                            } else if (priceChangePercent > 1) {
+                                block.classList.add('black-bg', 'green-text');
+                            } else if (priceChangePercent < -1) {
+                                block.classList.add('black-bg', 'red-text');
+                            }
+
+                            var percent_str = priceChangePercent.toFixed(1).toString() + "%";
+                            if (priceChangePercent > 0)
+                                percent_str = "+" + percent_str;
+                            // 移除價格末尾多餘的零，並移除百分比
+                            var price = parseFloat(data.lastPrice).toFixed(2);
+                            block.innerHTML = `<center><div>${coin}<br /> ${percent_str} </div></center>`;
+                            container.appendChild(block);
+                        })
+                        .catch(error => console.error('Error fetching ' + coin + ' price:', error));
+                });
+            }
+
+            // 首次載入時執行
+            fetchAndUpdate();
+
+            // 每三分鐘重新載入一次
+            setInterval(fetchAndUpdate, 180000);
+        });
+    </script>
+</body>
+</html>
