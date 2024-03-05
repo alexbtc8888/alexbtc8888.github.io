@@ -83,14 +83,18 @@
         document.addEventListener("DOMContentLoaded", function() {
             function fetchAndUpdate() {
                 var container = document.querySelector('.container');
-                var coins = ['BTC', 'ETH', 'SOL', 'BNB', 
-                 'STX', 'ORDI', '1000SATS', 'RIF',  
-                             'ARB', 'OP', 'STRK', 'XAI',
-                             'LINK', 'PYTH', 'DOT', 'ATOM',
-                             'FIL', 'AR', 'STORJ', 'ICP',
-                             'BLUR','UNI', 'DYDX', 'JUP', 
-                             'STG', 'ALT', 'MANTA', 'MATIC',
-                             'SSV', 'PENDLE', 'MAGIC', 'WLD'];
+                var coinOrder = [
+                    'BTC', 'ETH', 'SOL', 'BNB',
+                    'STX', 'ORDI', '1000SATS', 'RIF',
+                    'ARB', 'OP', 'STRK', 'XAI',
+                    'LINK', 'PYTH', 'TIA', 'BAND',
+                    'FIL', 'AR', 'DOT', 'ATOM', 
+                    'BLUR', 'UNI', 'DYDX', 'JUP',
+                    'STG', 'ALT', 'MANTA', 'MATIC',
+                    'SSV', 'PENDLE', 'MAGIC', 'WLD',
+                    'FLOW', 'NEXO', 'APE', 'MEME',
+                    'PEPE', 'DOGE', 'SHIB', 'BONK'
+                    ];
 
                 container.innerHTML = ''; // 清空容器內的內容
 
