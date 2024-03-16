@@ -1,3 +1,54 @@
+<script>
+	// 定義幣種列表和分類
+	const symbols = [
+		{ symbol: 'ETH', category: '01) Chain' },
+		{ symbol: 'SOL', category: '01) Chain' },
+		{ symbol: 'BNB', category: '01) Chain' },
+		{ symbol: 'STX', category: '03) BTC L2' },
+		{ symbol: 'ORDI', category: '03) BTC L2' },
+		{ symbol: '1000SATS', category: '03) BTC L2' },
+		{ symbol: 'RIF', category: '03) BTC L2' },
+		{ symbol: 'ARB', category: '02) Layer 2' },
+		{ symbol: 'OP', category: '02) Layer 2' },
+		{ symbol: 'STRK', category: '02) Layer 2' },
+		{ symbol: 'XAI', category: '02) Layer 2' },
+		{ symbol: 'LINK', category: '04) Infrastructure' },
+		{ symbol: 'PYTH', category: '04) Infrastructure' },
+		{ symbol: 'TIA', category: '04) Infrastructure' },
+		{ symbol: 'BAND', category: '04) Infrastructure' },
+		{ symbol: 'FIL', category: '05) Storage' },
+		{ symbol: 'AR', category: '05) Storage' },
+		{ symbol: 'DOT', category: '06) Layer 0' },
+		{ symbol: 'ATOM', category: '06) Layer 0' },
+		{ symbol: 'BLUR', category: '09) NFT' },
+		{ symbol: 'UNI', category: '07) DeFi' },
+		{ symbol: 'DYDX', category: '07) DeFi' },
+		{ symbol: 'JUP', category: '07) DeFi' },
+		{ symbol: 'ALT', category: '04) Infrastructure' },
+		{ symbol: 'MANTA', category: '02) Layer 2' },
+		{ symbol: 'MATIC', category: '02) Layer 2' },
+		{ symbol: 'SUI', category: '01) Chain' },
+		{ symbol: 'APT', category: '01) Chain' },
+		{ symbol: 'SSV', category: '04) Infrastructure' },
+		{ symbol: 'WLD', category: '08) MEME' },
+		{ symbol: 'PENDLE', category: '07) DeFi' },
+		{ symbol: 'AAVE', category: '07) DeFi' },
+		{ symbol: 'MKR', category: '07) DeFi' },
+		{ symbol: 'SNX', category: '07) DeFi' },
+		{ symbol: 'INJ', category: '07) DeFi' },
+		{ symbol: 'PEPE', category: '08) MEME' },
+		{ symbol: 'DOGE', category: '08) MEME' },
+		{ symbol: 'BONK', category: '08) MEME' },
+		{ symbol: 'HMX', category: '12) Other' },
+		{ symbol: 'AVA', category: '12) Other' },
+		{ symbol: 'RNDR', category: '12) Other' },
+		{ symbol: 'GPT', category: '12) Other' },
+		{ symbol: 'FLOW', category: '01) Chain' },
+		{ symbol: 'MEME', category: '09) NFT' },
+		{ symbol: 'APE', category: '09) NFT' },
+		{ symbol: 'STG', category: '06) Layer 0' }
+	];
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +88,8 @@
 				<th>Category</th>
                 <th>Coin/Token</th>
                 <th>Price with BTC</th>
-                <th>Change Percentage </th>
+                <th>Change Percentage</th>
+				<th>USD Price</th>
             </tr>
         </thead>
         <tbody id="data">
@@ -66,72 +118,49 @@
                 });
         }
 
-        // 定義幣種列表和分類
-        const symbols = [
-            { symbol: 'ETH', category: '01) Chain' },
-            { symbol: 'SOL', category: '01) Chain' },
-            { symbol: 'BNB', category: '01) Chain' },
-            { symbol: 'STX', category: '03) BTC L2' },
-            { symbol: 'ORDI', category: '03) BTC L2' },
-            { symbol: '1000SATS', category: '03) BTC L2' },
-            { symbol: 'RIF', category: '03) BTC L2' },
-            { symbol: 'ARB', category: '02) Layer 2' },
-            { symbol: 'OP', category: '02) Layer 2' },
-            { symbol: 'STRK', category: '02) Layer 2' },
-            { symbol: 'XAI', category: '02) Layer 2' },
-            { symbol: 'LINK', category: '04) Infrastructure' },
-            { symbol: 'PYTH', category: '04) Infrastructure' },
-            { symbol: 'TIA', category: '04) Infrastructure' },
-            { symbol: 'BAND', category: '04) Infrastructure' },
-            { symbol: 'FIL', category: '05) Storage' },
-            { symbol: 'AR', category: '05) Storage' },
-            { symbol: 'DOT', category: '06) Layer 0' },
-            { symbol: 'ATOM', category: '06) Layer 0' },
-            { symbol: 'BLUR', category: '09) NFT' },
-            { symbol: 'UNI', category: '07) DeFi' },
-            { symbol: 'DYDX', category: '07) DeFi' },
-            { symbol: 'JUP', category: '07) DeFi' },
-            { symbol: 'ALT', category: '04) Infrastructure' },
-            { symbol: 'MANTA', category: '02) Layer 2' },
-            { symbol: 'MATIC', category: '02) Layer 2' },
-            { symbol: 'SUI', category: '01) Chain' },
-            { symbol: 'APT', category: '01) Chain' },
-            { symbol: 'SSV', category: '04) Infrastructure' },
-            { symbol: 'WLD', category: '08) MEME' },
-            { symbol: 'PENDLE', category: '07) DeFi' },
-			{ symbol: 'AAVE', category: '07) DeFi' },
-			{ symbol: 'MKR', category: '07) DeFi' },
-			{ symbol: 'SNX', category: '07) DeFi' },
-			{ symbol: 'INJ', category: '07) DeFi' },
-            { symbol: 'PEPE', category: '08) MEME' },
-            { symbol: 'DOGE', category: '08) MEME' },
-            { symbol: 'BONK', category: '08) MEME' },
-            { symbol: 'HMX', category: '12) Other' },
-            { symbol: 'AVA', category: '12) Other' },
-            { symbol: 'RNDR', category: '12) Other' },
-            { symbol: 'GPT', category: '12) Other' },
-            { symbol: 'FLOW', category: '01) Chain' },
-            { symbol: 'MEME', category: '09) NFT' },
-            { symbol: 'APE', category: '09) NFT' },
-            { symbol: 'STG', category: '06) Layer 0' }
-        ];
+        function get_symbol_usdt_price(symbol) {
+            const url = "https://api.binance.com/api/v3/ticker/24hr";
+            const params = {
+                "symbol": `${symbol}USDT`
+            };
+
+            return fetch(`${url}?${new URLSearchParams(params)}`)
+                .then(response => response.json())
+                .then(data => {
+                    //const price_change_percent = 'priceChangePercent' in data ? parseFloat(data['priceChangePercent']).toFixed(2) : null;
+                    var last_price = 'lastPrice' in data ? parseFloat(data['lastPrice']) : null;
+					last_price = parseFloat(last_price);
+					if (last_price > 100)
+						last_price = parseInt(last_price);
+					else if (last_price > 1)
+						last_price = parseFloat(last_price).toFixed(2);
+					else if (last_price > 0.001)
+						last_price = parseFloat(last_price).toFixed(4);
+					return last_price;
+                    //return [last_price, price_change_percent];
+                })
+                .catch(error => {
+                    console.error(`Error fetching data for ${symbol}:`, error);
+                    return [null, null];
+                });
+        }
 
         // 獲取表格數據
         function getTableData() {
             const dataContainer = document.getElementById('data');
             dataContainer.innerHTML = '';
 
-            const promises = symbols.map(({ symbol }) => get_symbol_price(symbol));
+            const promises = symbols.map(({ symbol }) => Promise.all([get_symbol_price(symbol), get_symbol_usdt_price(symbol)]));
 
             Promise.all(promises)
                 .then(results => {
                     const data = [];
 
                     results.forEach((result, index) => {
-                        const [last_price, price_change_percent] = result;
+                        const [[last_price, price_change_percent], usdt_price] = result;
                         const { symbol, category } = symbols[index];
 
-                        if (last_price !== null && price_change_percent !== null) {
+                        if (last_price !== null && price_change_percent !== null && usdt_price !== null) {
                             const priceChangePercentFormatted = price_change_percent > 0
                                 ? (price_change_percent < 10 ? `+${price_change_percent}` : `+${price_change_percent}`)
                                 : (price_change_percent > -10 ? ` ${price_change_percent}` : price_change_percent);
@@ -140,7 +169,8 @@
                                 category,
                                 symbol,
                                 last_price,
-                                price_change_percent: priceChangePercentFormatted
+                                price_change_percent: priceChangePercentFormatted,
+                                usdt_price
                             });
                         }
                     });
@@ -153,7 +183,7 @@
                         }
                     });
 
-                    data.forEach(({ category, symbol, last_price, price_change_percent }) => {
+                    data.forEach(({ category, symbol, last_price, price_change_percent, usdt_price }) => {
                         const row = document.createElement('tr');
                         const priceChangeClass = parseFloat(price_change_percent) > 0 ? 'positive' : 'negative';
                         row.innerHTML = `
@@ -161,6 +191,7 @@
                             <td>${symbol}</td>
                             <td>${last_price}</td>
                             <td class="${priceChangeClass}">${price_change_percent}%</td>
+                            <td>${usdt_price}</td>
                         `;
                         dataContainer.appendChild(row);
                     });
