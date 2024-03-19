@@ -81,7 +81,7 @@
         }
 
         /* 新增以下媒體查詢,在電腦版的時候不要固定字體大小 */
-        @media (min-width: 1200px) {
+        @media (min-width: 768px) {
             table {
                 font-size: inherit; /* 讓字體大小跟隨瀏覽器預設值 */
             }
@@ -89,7 +89,7 @@
     </style>
 </head>
 <body>
-    Reference: Binance
+    <span id="updated-time"></span>
     <table>
         <thead>
             <tr>
@@ -153,6 +153,18 @@
                 });
         }
 
+        // 新增以下函數來更新時間
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timeString = `<b>Updated at ${year}-${month}-${day} ${hours}:${minutes}</b>`;
+            document.getElementById('updated-time').innerHTML = timeString;
+        }
+
         // 獲取表格數據
         function getTableData() {
             const dataContainer = document.getElementById('data');
@@ -203,6 +215,7 @@
                         `;
                         dataContainer.appendChild(row);
                     });
+                    updateTime();
                 })
                 .catch(error => {
                     console.error('Error:', error);
