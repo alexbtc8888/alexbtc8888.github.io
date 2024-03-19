@@ -79,6 +79,13 @@
         .negative {
             color: red;
         }
+
+        /* 新增以下媒體查詢,在電腦版的時候不要固定字體大小 */
+        @media (min-width: 1200px) {
+            table {
+                font-size: inherit; /* 讓字體大小跟隨瀏覽器預設值 */
+            }
+        }
     </style>
 </head>
 <body>
