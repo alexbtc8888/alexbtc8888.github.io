@@ -1,3 +1,4 @@
+
 <script>
     // 定義幣種列表和分類
     const symbols = [
@@ -6,7 +7,7 @@
         { symbol: 'BNB', category: '01) Chain' },
         { symbol: 'STX', category: '03) BTC L2' },
         { symbol: 'ORDI', category: '03) BTC L2' },
-        { symbol: '1000SATS', category: '03) BTC L2' },
+        //{ symbol: '1000SATS', category: '03) BTC L2' },
         { symbol: 'RIF', category: '03) BTC L2' },
         { symbol: 'ARB', category: '02) Layer 2' },
         { symbol: 'OP', category: '02) Layer 2' },
@@ -23,7 +24,7 @@
         { symbol: 'BLUR', category: '09) NFT' },
         { symbol: 'UNI', category: '07) DeFi' },
         { symbol: 'DYDX', category: '07) DeFi' },
-        { symbol: 'JUP', category: '07) DeFi' },
+        //{ symbol: 'JUP', category: '07) DeFi' },
         { symbol: 'ALT', category: '04) Infra' },
         { symbol: 'MANTA', category: '02) Layer 2' },
         { symbol: 'MATIC', category: '02) Layer 2' },
@@ -36,16 +37,16 @@
         { symbol: 'MKR', category: '07) DeFi' },
         { symbol: 'SNX', category: '07) DeFi' },
         { symbol: 'INJ', category: '07) DeFi' },
-        { symbol: 'PEPE', category: '08) MEME' },
+        //{ symbol: 'PEPE', category: '08) MEME' },
         { symbol: 'DOGE', category: '08) MEME' },
-        { symbol: 'BONK', category: '08) MEME' },
+        //{ symbol: 'BONK', category: '08) MEME' },
         { symbol: 'BOME', category: '08) MEME' },
-        { symbol: 'HMX', category: '12) Other' },
+        //{ symbol: 'HMX', category: '12) Other' },
         { symbol: 'AVA', category: '12) Other' },
         { symbol: 'RNDR', category: '12) Other' },
-        { symbol: 'GPT', category: '12) Other' },
+        //{ symbol: 'GPT', category: '12) Other' },
         { symbol: 'FLOW', category: '01) Chain' },
-        { symbol: 'MEME', category: '09) NFT' },
+        //{ symbol: 'MEME', category: '09) NFT' },
         { symbol: 'APE', category: '09) NFT' },
         { symbol: 'STG', category: '06) Layer 0' }
     ];
@@ -98,6 +99,7 @@
                 <th>BTC Price</th>
                 <th>Change</th>
                 <th>USD</th>
+                <th>USD Change</th>
             </tr>
         </thead>
         <tbody id="data">
@@ -135,7 +137,7 @@
             return fetch(`${url}?${new URLSearchParams(params)}`)
                 .then(response => response.json())
                 .then(data => {
-                    //const price_change_percent = 'priceChangePercent' in data ? parseFloat(data['priceChangePercent']).toFixed(2) : null;
+                    const price_change_percent_u = 'priceChangePercent' in data ? parseInt(data['priceChangePercent']) : null;
                     var last_price = 'lastPrice' in data ? parseFloat(data['lastPrice']) : null;
                     last_price = parseFloat(last_price);
                     if (last_price > 100)
@@ -144,8 +146,8 @@
                         last_price = parseFloat(last_price).toFixed(2);
                     else if (last_price > 0.001)
                         last_price = parseFloat(last_price).toFixed(4);
-                    return last_price;
-                    //return [last_price, price_change_percent];
+                    //return last_price;
+                    return [last_price, price_change_percent_u];
                 })
                 .catch(error => {
                     console.error(`Error fetching data for ${symbol}:`, error);
@@ -177,20 +179,22 @@
                     const data = [];
 
                     results.forEach((result, index) => {
-                        const [[last_price, price_change_percent], usdt_price] = result;
+                        const [[last_price, price_change_percent], [usdt_price, usdt_percent]] = result;
                         const { symbol, category } = symbols[index];
 
-                        if (last_price !== null && price_change_percent !== null && usdt_price !== null) {
+                        if (last_price !== null && price_change_percent !== null && usdt_price !== null && usdt_percent != null) {
                             const priceChangePercentFormatted = price_change_percent > 0
                                 ? (price_change_percent < 10 ? `+${price_change_percent}` : `+${price_change_percent}`)
                                 : (price_change_percent > -10 ? ` ${price_change_percent}` : price_change_percent);
 
+                            var usdt_percent_formatted = usdt_percent > 0 ? `+${usdt_percent}` : `${usdt_percent}`;
                             data.push({
                                 category,
                                 symbol,
                                 last_price,
                                 price_change_percent: priceChangePercentFormatted,
-                                usdt_price
+                                usdt_price,
+                                usdt_percent_formatted
                             });
                         }
                     });
@@ -203,15 +207,17 @@
                         }
                     });
 
-                    data.forEach(({ category, symbol, last_price, price_change_percent, usdt_price }) => {
+                    data.forEach(({ category, symbol, last_price, price_change_percent, usdt_price, usdt_percent_formatted }) => {
                         const row = document.createElement('tr');
                         const priceChangeClass = parseFloat(price_change_percent) > 0 ? 'positive' : 'negative';
+                        const priceChangeClass_u = parseFloat(usdt_percent_formatted) > 0 ? 'positive' : 'negative';
                         row.innerHTML = `
                             <td>${category}</td>
                             <td>${symbol}</td>
                             <td>${last_price}</td>
                             <td class="${priceChangeClass}">${price_change_percent}%</td>
                             <td>${usdt_price}</td>
+                            <td class="${priceChangeClass_u}">${usdt_percent_formatted}%</td>
                         `;
                         dataContainer.appendChild(row);
                     });
