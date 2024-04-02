@@ -91,6 +91,12 @@
                 font-size: inherit; /* 讓字體大小跟隨瀏覽器預設值 */
             }
         }
+
+        /* 新增以下 CSS 規則 */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -218,9 +224,9 @@
                         row.innerHTML = `
                             <td>${category}</td>
                             <td>${symbol}</td>
-                            <td>${last_price}</td>
+                            <td><a href="https://www.binance.com/zh-TW/trade/${last_price}BTC">${last_price}</a></td>
                             <td class="${priceChangeClass}">${price_change_percent}%</td>
-                            <td>${usdt_price}</td>
+                            <td><a href="https://www.binance.com/zh-TW/trade/${usdt_price}USDT">${usdt_price}</a></td>
                             <td class="${priceChangeClass_u}">${usdt_percent_formatted}%</td>
                         `;
                         dataContainer.appendChild(row);
