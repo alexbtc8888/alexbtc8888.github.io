@@ -224,9 +224,9 @@
                         row.innerHTML = `
                             <td>${category}</td>
                             <td>${symbol}</td>
-                            <td><a href="https://www.binance.com/zh-TW/trade/${last_price}BTC">${last_price}</a></td>
+                            <td><a href="https://www.binance.com/zh-TW/trade/${symbol}BTC">${last_price}</a></td>
                             <td class="${priceChangeClass}">${price_change_percent}%</td>
-                            <td><a href="https://www.binance.com/zh-TW/trade/${usdt_price}USDT">${usdt_price}</a></td>
+                            <td><a href="https://www.binance.com/zh-TW/trade/${symbol}USDT">${usdt_price}</a></td>
                             <td class="${priceChangeClass_u}">${usdt_percent_formatted}%</td>
                         `;
                         dataContainer.appendChild(row);
